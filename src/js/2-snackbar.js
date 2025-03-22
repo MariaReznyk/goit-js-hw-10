@@ -9,22 +9,18 @@ form.addEventListener('submit', event => {
   const stateByUser = event.target.elements['state'].value;
   createPromiseCollection(delayByUser, stateByUser)
     .then(delay => {
-      setTimeout(() => {
-        iziToast.show({
-          message: `✅ Fulfilled promise in ${delay}ms`,
-          backgroundColor: '#59A10D',
-          messageColor: '#B5EA7C',
-        });
-      }, delay);
+      iziToast.show({
+        message: `✅ Fulfilled promise in ${delay}ms`,
+        backgroundColor: '#59A10D',
+        messageColor: '#B5EA7C',
+      });
     })
     .catch(delay => {
-      setTimeout(() => {
-        iziToast.show({
-          message: `❌ Rejected promise in ${delay}ms`,
-          backgroundColor: '#f06363',
-          messageColor: '#FFBEBE',
-        });
-      }, delay);
+      iziToast.show({
+        message: `❌ Rejected promise in ${delay}ms`,
+        backgroundColor: '#f06363',
+        messageColor: '#FFBEBE',
+      });
     });
   event.target.reset();
 });
@@ -32,9 +28,13 @@ form.addEventListener('submit', event => {
 function createPromiseCollection(delayByUser, stateByUser) {
   return new Promise((resolve, reject) => {
     if (stateByUser === 'fulfilled') {
-      resolve(delayByUser);
+      setTimeout(() => {
+        resolve(delayByUser);
+      }, Number(delayByUser));
     } else {
-      reject(delayByUser);
+      setTimeout(() => {
+        reject(delayByUser);
+      }, Number(delayByUser));
     }
   });
 }
